@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Cadastro de Alunos</title>
+</head>
+<body>
+    <h1>Cadastro de Alunos</h1>
+
+    <label>Nome: <input id="nome"></label><br>
+    <label>Idade: <input id="idade"></label><br>
+    <label>Sesi: <input id="sesi"></label><br>
+    <label>Pet: <select id="pet"><option value="sim">Sim</option><option value="nao">Não</option></select></label><br>
+
+    <button onclick="adicionarAluno()">Adicionar</button>
+    <button onclick="removerUltimoAluno()">Remover Último</button>
+
+    <h2>Lista de Alunos</h2>
+    <ul id="lista-alunos"></ul>
+
+    <script>
+        let alunos = [];
+
+        function adicionarAluno() {
+            const nome = document.getElementById("nome").value;
+            const idade = document.getElementById("idade").value;
+            const sesi = document.getElementById("sesi").value;
+            const pet = document.getElementById("pet").value;
+
+            if (nome && idade && sesi) {
+                alunos.push({ nome, idade, sesi, pet });
+                atualizarLista();
+                limparCampos();
+            } else {
+                alert("Preencha todos os campos!");
+            }
+        }
+
+        function removerUltimoAluno() {
+            if (alunos.length) {
+                alunos.pop();
+                atualizarLista();
+            } else {
+                alert("Nenhum aluno para remover!");
+            }
+        }
+
+        function atualizarLista() {
+            const lista = document.getElementById("lista-alunos");
+            lista.innerHTML = alunos.map((aluno, index) => 
+                `<li>${index + 1}. ${aluno.nome}, ${aluno.idade} anos, Sesi: ${aluno.sesi}, Pet: ${aluno.pet}</li>`
+            ).join('');
+        }
+
+        function limparCampos() {
+            document.getElementById("nome").value = "";
+            document.getElementById("idade").value = "";
+            document.getElementById("sesi").value = "";
+            document.getElementById("pet").value = "sim";
+        }
+    </script>
+</body>
+</html>
